@@ -23,7 +23,7 @@ function textToSequence(rawInput) {
 
 router.get('/', async function (req, res, next) {
     try {
-        if (!model) model = await tf.node.loadSavedModel(path.join(__dirname, '..', 'my_model'))
+        if (!model) model = await tf.node.loadSavedModel(path.join(__dirname, '..', 'ml_model'))
         const input = textToSequence(req.query.input)
         const result = model.predict(tf.tensor(input))
         return res.json(await result.array())
