@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const tf = require('@tensorflow/tfjs-node')
+// const tf = require('@tensorflow/tfjs-node')
 const path = require('path')
 const vocab = require('../vocab.json')
 let model = null
