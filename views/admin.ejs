@@ -17,8 +17,10 @@
             <% reports.forEach(function(data, i){ %>
             <!-- Nanti isinya row tabel -->
             <h2><%- i %></h2>
-            <h3><%- data.report %></h3>
-            <h4><%- data.timestamp %></h4>
+            <h2><%- data.importance %></h2>
+            <h4><%- data.type %></h4>
+            <h5><%- data.report %></h5>
+            <h6><%- data.timestamp %></h6>
             <!-- Nanti isinya row tabel -->
             <% }); %>
         </div>
