@@ -1,8 +1,9 @@
+// Import dependencies
 const express = require('express')
 const router = express.Router()
-// const tf = require('@tensorflow/tfjs-node')
 const path = require('path')
-// const vocab = require('../vocab.json')
+const tf = require('@tensorflow/tfjs-node')
+const vocab = require('../vocabulary/vocabulary.json')
 let model = null
 
 const Firestore = require('@google-cloud/firestore');
@@ -25,7 +26,14 @@ async function addReport() {
     console.log('Added document with ID: ', res.id);
 }
 // addReport()
-
+function paddingArray(sequence, padding) {
+    const insertPadding = padding - sequence.length;
+    for (let i = 0; i < insertPadding; i++) {
+        sequence.push(0);
+    }
+    return sequence;
+}
+// function for processing Machine Learning Model
 function textToSequence(rawInput) {
     const input = Array.isArray(rawInput) ? rawInput : [rawInput]
     console.log(input)
@@ -37,19 +45,38 @@ function textToSequence(rawInput) {
             return result
         }, [])
         console.log(sequence)
-        finalResult.push(sequence)
+        finalResult.push(paddingArray(sequence, 53))
         return finalResult
     }, [])
 }
 
+function processOutput(output) {
+    return output.reduce(function (result, current) {
+        result.push(current[0]);
+        return result;
+    }, []);
+}
+
 router.get('/', async function (req, res, next) {
     try {
-        // if (!model) model = await tf.node.loadSavedModel(path.join(__dirname, '..', 'ml_model'))
-        // const input = textToSequence(req.query.input)
-        // const result = model.predict(tf.tensor(input))
-        // return res.json(await result.array())
+        // if (!model) model = await tf.node.loadSavedModel(path.join(__dirname, '..', 'novia_model', 'my_model'))
+        const modelUrl = "https://storage.googleapis.com/novia_model/models/model.json"
+        if (!model) model = await tf.loadLayersModel(modelUrl)
+        const input = textToSequence(req.query.input)
+        const result = model.predict(tf.tensor2d(input))
+        if (tf.argMax(result) == 0) {
+            let importance = "Low";
+            console.log(importance);
+          } 
+        else if (tf.argMax(result) == 1){
+            // console.log("High\n");
+            let importance = "High";
+            console.log(importance);
+          }
+        return res.json(processOutput(await result.array()))
     } catch (e) {
-
+        console.log(e);
+        return res.send('Model Error')
     }
 })
 
