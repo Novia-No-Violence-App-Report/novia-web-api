@@ -59,7 +59,6 @@ function processOutput(output) {
 
 router.get('/', async function (req, res, next) {
     try {
-        // if (!model) model = await tf.node.loadSavedModel(path.join(__dirname, '..', 'novia_model', 'my_model'))
         const modelUrl = "https://storage.googleapis.com/novia_model/models/model.json"
         if (!model) model = await tf.loadLayersModel(modelUrl)
         const input = textToSequence(req.query.input)
@@ -69,7 +68,6 @@ router.get('/', async function (req, res, next) {
             console.log(importance);
           } 
         else if (tf.argMax(result) == 1){
-            // console.log("High\n");
             let importance = "High";
             console.log(importance);
           }
