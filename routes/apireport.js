@@ -14,18 +14,8 @@ const db = new Firestore({
     keyFilename: 'service-account.json',
 });
 
-async function addReport() {
-    const res = await db.collection('reports').add({
-        importance: 'low',
-        report: 'pada saat saya ingin berangkat ke kantor saya melihat ada kardus mencurigakan di depan rumah saya dan pada saat saya cek di dalam kardus tersbut ada seorang anak bayi dengan selembar surat',
-        timestamp: timeStamp(),
-        user_id: '9123112310293'
-    });
-
-    console.log('Added document with ID: ', res.id);
-}
-
-async function addReportWithVariables(report, userId, importance) {
+// Add classified report to Firestore
+async function addReport(report, userId, importance) {
     const res = await db.collection('reports').add({
         importance: importance,
         report: report,
@@ -36,7 +26,6 @@ async function addReportWithVariables(report, userId, importance) {
     console.log('Added document with ID: ', res.id);
 }
 
-// addReport()
 function paddingArray(sequence, padding) {
     const insertPadding = padding - sequence.length;
     for (let i = 0; i < insertPadding; i++) {
@@ -44,7 +33,8 @@ function paddingArray(sequence, padding) {
     }
     return sequence;
 }
-// function for processing Machine Learning Model
+
+// Convert text to sequence using vocab.json
 function textToSequence(rawInput) {
     const input = Array.isArray(rawInput) ? rawInput : [rawInput]
     console.log("\n\nINPUT\n" + input)
@@ -59,44 +49,48 @@ function textToSequence(rawInput) {
     }, [])
 }
 
-function processOutput(output) {
-    return output.reduce(function (result, current) {
-        result.push(current[1]);
-        // console.log(current)
-        return result;
-    }, []);
-}
-
-function argMax(array) {
-    return [].map.call(array, (x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
-}
-
 router.get('/', async function (req, res, next) {
     try {
         const modelUrl = "https://storage.googleapis.com/novia_model/models/model.json"
+
+        let report = req.body.report
+        let userId = req.body.user_id
+
         if (!model) model = await tf.loadLayersModel(modelUrl)
         const input = textToSequence(req.query.input)
-        const result = await model.predict(tf.tensor2d(await input))
+        const result = await model.predict(tf.tensor2d(input))
         const resultImportance = argMax(result.dataSync())
 
-        console.log("\nRESULT")
-        console.log(resultImportance + "\n")
+        if (resultImportance === 0)
+            addReport(report, userId, "low")
+        else if (resultImportance === 1)
+            addReport(report, userId, "high")
 
-        if (resultImportance === 0) {
-            return res.json({
-                report: req.query.input,
-                importance: "low"
-            })
-        } else if (resultImportance === 1) {
-            return res.json({
-                report: req.query.input,
-                importance: "high"
-            })
-        }
+        res.json({
+            report: req.body,
+            importance: resultImportance,
+            msg: "Laporan anda sudah masuk dan akan segera diproses. Terimakasih sudah menggunakan Novia.",
+            status_code: 204
+        })
+
     } catch (e) {
         console.log(e);
         return res.send('Model Error')
     }
 })
+
+function timeStamp() {
+    Date.prototype.today = function () {
+        return ((this.getDate() < 10) ? "0" : "") + this.getDate() + "/" + (((this.getMonth() + 1) < 10) ? "0" : "") + (this.getMonth() + 1) + "/" + this.getFullYear();
+    }
+    Date.prototype.timeNow = function () {
+        return ((this.getHours() < 10) ? "0" : "") + this.getHours() + ":" + ((this.getMinutes() < 10) ? "0" : "") + this.getMinutes() + ":" + ((this.getSeconds() < 10) ? "0" : "") + this.getSeconds();
+    }
+    return new Date().today() + " " + new Date().timeNow();
+}
+
+function argMax(array) {
+    return [].map.call(array, (x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
+}
 
 module.exports = router

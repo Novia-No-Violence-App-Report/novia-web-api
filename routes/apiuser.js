@@ -26,7 +26,6 @@ router.get('/', async function (req, res, next) {
 })
 
 router.post('/', async function (req, res, next) {
-    console.log(req.body)
     try {
         var response = addUser(req.body)
 
