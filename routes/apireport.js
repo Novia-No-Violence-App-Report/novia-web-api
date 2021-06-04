@@ -1,7 +1,6 @@
 // Import dependencies
 const express = require('express')
 const router = express.Router()
-const path = require('path')
 const tf = require('@tensorflow/tfjs-node')
 const vocab = require('../vocabulary/vocabulary.json')
 let model = null
@@ -53,11 +52,11 @@ router.get('/', async function (req, res, next) {
     try {
         const modelUrl = "https://storage.googleapis.com/novia_model/models/model.json"
 
-        let report = req.body.report
-        let userId = req.body.user_id
+        let report = req.query.report
+        let userId = req.query.userid
 
         if (!model) model = await tf.loadLayersModel(modelUrl)
-        const input = textToSequence(req.query.input)
+        const input = textToSequence(req.query.report)
         const result = await model.predict(tf.tensor2d(input))
         const resultImportance = argMax(result.dataSync())
 
@@ -67,7 +66,7 @@ router.get('/', async function (req, res, next) {
             addReport(report, userId, "high")
 
         res.json({
-            report: req.body,
+            report: req.query.report,
             importance: resultImportance,
             msg: "Laporan anda sudah masuk dan akan segera diproses. Terimakasih sudah menggunakan Novia.",
             status_code: 204
