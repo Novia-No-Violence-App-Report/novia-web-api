@@ -63,7 +63,7 @@ router.get('/', async function (req, res, next) {
         const modelUrl = "https://storage.googleapis.com/novia_model/models/model.json"
         if (!model) model = await tf.loadLayersModel(modelUrl)
         const input = textToSequence(req.query.input)
-        const result = model.predict(tf.tensor2d(input))
+        const result = model.predict(tf.tensor2(input))
         if (tf.argMax(result) == 0) {
             let importance = "Low";
             console.log(importance);
