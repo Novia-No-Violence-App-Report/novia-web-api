@@ -16,7 +16,6 @@ const db = new Firestore({
 async function addReport() {
     const res = await db.collection('reports').add({
         importance: 'low',
-        type: 'kekerasan',
         report: 'pada saat saya ingin berangkat ke kantor saya melihat ada kardus mencurigakan di depan rumah saya dan pada saat saya cek di dalam kardus tersbut ada seorang anak bayi dengan selembar surat',
         timestamp: timeStamp(),
         user_id: '9123112310293'
@@ -24,6 +23,18 @@ async function addReport() {
 
     console.log('Added document with ID: ', res.id);
 }
+
+async function addReportWithVariables(report, userId, importance) {
+    const res = await db.collection('reports').add({
+        importance: importance,
+        report: report,
+        timestamp: timeStamp(),
+        user_id: userId
+    });
+
+    console.log('Added document with ID: ', res.id);
+}
+
 // addReport()
 
 function textToSequence(rawInput) {
@@ -42,14 +53,28 @@ function textToSequence(rawInput) {
     }, [])
 }
 
-router.get('/', async function (req, res, next) {
-    try {
-        // if (!model) model = await tf.node.loadSavedModel(path.join(__dirname, '..', 'ml_model'))
-        // const input = textToSequence(req.query.input)
-        // const result = model.predict(tf.tensor(input))
-        // return res.json(await result.array())
-    } catch (e) {
+router.post('/', async function (req, res, next) {
 
+    try {
+        console.log(req.body)
+        let report = req.body.report
+        let userId = req.body.user_id
+        // 1 predict dulu
+        let importance = "high"
+        // 2 balikin response
+        // 3 masukin ke firestore
+        addReport(report, userId, importance)
+        res.json({
+            report: req.body,
+            msg: "Laporan anda sudah masuk dan akan segera diproses. Terimakasih sudah menggunakan Novia.",
+            status_code: 204
+        })
+    } catch {
+        res.json({
+            report: req.body,
+            msg: "Laporan gagal diproses, mohon coba beberapa saat lagi.",
+            status_code: 405
+        })
     }
 })
 
