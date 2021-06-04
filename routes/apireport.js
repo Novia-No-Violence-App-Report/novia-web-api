@@ -1,8 +1,9 @@
+// Import dependencies
 const express = require('express')
 const router = express.Router()
-// const tf = require('@tensorflow/tfjs-node')
 const path = require('path')
-// const vocab = require('../vocab.json')
+const tf = require('@tensorflow/tfjs-node')
+const vocab = require('../vocabulary/vocabulary.json')
 let model = null
 
 const Firestore = require('@google-cloud/firestore');
@@ -36,45 +37,65 @@ async function addReportWithVariables(report, userId, importance) {
 }
 
 // addReport()
-
+function paddingArray(sequence, padding) {
+    const insertPadding = padding - sequence.length;
+    for (let i = 0; i < insertPadding; i++) {
+        sequence.unshift(0);
+    }
+    return sequence;
+}
+// function for processing Machine Learning Model
 function textToSequence(rawInput) {
     const input = Array.isArray(rawInput) ? rawInput : [rawInput]
-    console.log(input)
+    console.log("\n\nINPUT\n" + input)
     return input.reduce(function (finalResult, currentInput) {
-        const words = currentInput.split(" ")
-        console.log(words)
+        const words = currentInput.toLowerCase().split(" ")
         const sequence = words.reduce(function (result, current) {
             if (vocab[current]) result.push(vocab[current])
             return result
         }, [])
-        console.log(sequence)
-        finalResult.push(sequence)
+        finalResult.push(paddingArray(sequence, 53))
         return finalResult
     }, [])
 }
 
-router.post('/', async function (req, res, next) {
+function processOutput(output) {
+    return output.reduce(function (result, current) {
+        result.push(current[1]);
+        // console.log(current)
+        return result;
+    }, []);
+}
 
+function argMax(array) {
+    return [].map.call(array, (x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
+}
+
+router.get('/', async function (req, res, next) {
     try {
-        console.log(req.body)
-        let report = req.body.report
-        let userId = req.body.user_id
-        // 1 predict dulu
-        let importance = "high"
-        // 2 balikin response
-        // 3 masukin ke firestore
-        addReport(report, userId, importance)
-        res.json({
-            report: req.body,
-            msg: "Laporan anda sudah masuk dan akan segera diproses. Terimakasih sudah menggunakan Novia.",
-            status_code: 204
-        })
-    } catch {
-        res.json({
-            report: req.body,
-            msg: "Laporan gagal diproses, mohon coba beberapa saat lagi.",
-            status_code: 405
-        })
+        const modelUrl = "https://storage.googleapis.com/novia_model/models/model.json"
+        if (!model) model = await tf.loadLayersModel(modelUrl)
+        const input = textToSequence(req.query.input)
+        const result = await model.predict(tf.tensor2d(await input))
+        const resultImportance = argMax(result.dataSync())
+
+        console.log("\nRESULT")
+        console.log(resultImportance + "\n")
+
+        if (resultImportance === 0) {
+            return res.json({
+                report: req.query.input,
+                importance: "low"
+            })
+        } else if (resultImportance === 1) {
+            return res.json({
+                report: req.query.input,
+                importance: "high"
+            })
+        }
+    } catch (e) {
+        console.log(e);
+        return res.send('Model Error')
     }
 })
 
