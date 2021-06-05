@@ -52,8 +52,8 @@ router.get('/', async function (req, res, next) {
     try {
         const modelUrl = "https://storage.googleapis.com/novia_model/models/model.json"
 
-        let report = req.query.report
-        let userId = req.query.userid
+        let report = req.body.report
+        let userId = req.body.user_id
 
         if (!model) model = await tf.loadLayersModel(modelUrl)
         const input = textToSequence(req.query.report)
