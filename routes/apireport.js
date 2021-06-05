@@ -48,7 +48,7 @@ function textToSequence(rawInput) {
     }, [])
 }
 
-router.get('/', async function (req, res, next) {
+router.post('/', async function (req, res, next) {
     try {
         const modelUrl = "https://storage.googleapis.com/novia_model/models/model.json"
 
