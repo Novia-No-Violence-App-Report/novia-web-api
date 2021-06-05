@@ -26,6 +26,7 @@ async function addReport() {
     console.log('Added document with ID: ', res.id);
 }
 // addReport()
+
 function paddingArray(sequence, padding) {
     const insertPadding = padding - sequence.length;
     for (let i = 0; i < insertPadding; i++) {
@@ -53,6 +54,14 @@ function textToSequence(rawInput) {
 function processOutput(output) {
     return output.reduce(function (result, current) {
         result.push(current[0]);
+        if (tf.argMax(result) == 0) {
+            let importance = "Low";
+            console.log(importance);
+          } 
+        else if (tf.argMax(result) == 1){
+            let importance = "High";
+            console.log(importance);
+          }
         return result;
     }, []);
 }
@@ -62,15 +71,7 @@ router.get('/', async function (req, res, next) {
         const modelUrl = "https://storage.googleapis.com/novia_model/models/model.json"
         if (!model) model = await tf.loadLayersModel(modelUrl)
         const input = textToSequence(req.query.input)
-        const result = model.predict(tf.tensor2(input))
-        if (tf.argMax(result) == 0) {
-            let importance = "Low";
-            console.log(importance);
-          } 
-        else if (tf.argMax(result) == 1){
-            let importance = "High";
-            console.log(importance);
-          }
+        const result = model.predict(tf.tensor(input))
         return res.json(processOutput(await result.array()))
     } catch (e) {
         console.log(e);
