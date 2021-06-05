@@ -56,7 +56,7 @@ router.post('/', async function (req, res, next) {
         let userId = req.body.user_id
 
         if (!model) model = await tf.loadLayersModel(modelUrl)
-        const input = textToSequence(req.query.report)
+        const input = textToSequence(req.body.report)
         const result = await model.predict(tf.tensor2d(input))
         const resultImportance = argMax(result.dataSync())
 
@@ -66,7 +66,7 @@ router.post('/', async function (req, res, next) {
             addReport(report, userId, "high")
 
         res.json({
-            report: req.query.report,
+            report: report,
             importance: resultImportance,
             msg: "Laporan anda sudah masuk dan akan segera diproses. Terimakasih sudah menggunakan Novia.",
             status_code: 204
@@ -74,7 +74,7 @@ router.post('/', async function (req, res, next) {
 
     } catch (e) {
         console.log(e);
-        return res.send('Model Error')
+        return res.send('Model Error' + e.toString())
     }
 })
 
