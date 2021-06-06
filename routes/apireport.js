@@ -25,7 +25,7 @@ async function addReport(report, userId, importance) {
     console.log('Added document with ID: ', res.id);
 }
 
-function paddingArray(sequence, padding) {
+function pad_sequences(sequence, padding) {
     const insertPadding = padding - sequence.length;
     for (let i = 0; i < insertPadding; i++) {
         sequence.unshift(0);
@@ -34,7 +34,7 @@ function paddingArray(sequence, padding) {
 }
 
 // Convert text to sequence using vocab.json
-function textToSequence(rawInput) {
+function texts_to_sequences(rawInput) {
     const input = Array.isArray(rawInput) ? rawInput : [rawInput]
     console.log("\n\nINPUT\n" + input)
     return input.reduce(function (finalResult, currentInput) {
@@ -43,7 +43,7 @@ function textToSequence(rawInput) {
             if (vocab[current]) result.push(vocab[current])
             return result
         }, [])
-        finalResult.push(paddingArray(sequence, 53))
+        finalResult.push(pad_sequences(sequence, 53))
         return finalResult
     }, [])
 }
@@ -56,7 +56,7 @@ router.post('/', async function (req, res, next) {
         let userId = req.body.user_id
 
         if (!model) model = await tf.loadLayersModel(modelUrl)
-        const input = textToSequence(req.body.report)
+        const input = texts_to_sequences(req.body.report)
         const result = await model.predict(tf.tensor2d(input))
         const resultImportance = argMax(result.dataSync())
 
