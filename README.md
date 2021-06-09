@@ -24,17 +24,21 @@ Local environment:
    ```
    git clone https://github.com/Novia-No-Violence-App-Report/novia-web-api.git
    ```
-2. Install dependencies.
+2. Change directory to novia-web-api.
+   ```
+   cd novia-web-api/
+   ```
+3. Install dependencies.
    ```
    npm install
    ```
-2. Get News API Key from https://newsapi.org/.
-3. Download vocabulary.json from machine learning model.
+4. Get News API Key from https://newsapi.org/.
+5. Download vocabulary.json from machine learning model.
    ```python
    import json
    json.dumps(yourtokenizervariable.word_index)
    ```
-4. Download service-account.json from Google Cloud Platform.
+6. Download service-account.json from Google Cloud Platform.
    - In the Cloud Console, go to the Service Accounts page. https://console.cloud.google.com/iam-admin/serviceaccounts.
    - Select a project.
    - If you don't have any service accounts, click "Create Service Account".
@@ -44,11 +48,11 @@ Local environment:
    - Select JSON as the Key type and click Create.
    - Rename file to "service-account.json".
    - Put "service-account.json" into your novia-web-api folder.
-5. Run Node.js.
+7. Run Node.js.
    ```
    node index.js
    ```
-6. Go to your browser and type http://localhost:8080/admin to see the result.
+8. Go to your browser and type http://localhost:8080/admin to see the result.
 
 
 
