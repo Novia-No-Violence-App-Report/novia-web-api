@@ -29,7 +29,7 @@ Local environment:
    npm install
    ```
 2. Get News API Key from https://newsapi.org/.
-3. vocabulary.json from machine learning model.
+3. Download vocabulary.json from machine learning model.
    ```python
    import json
    json.dumps(yourtokenizervariable.word_index)
