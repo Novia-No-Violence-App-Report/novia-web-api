@@ -14,9 +14,17 @@ It uses chatbot system to collect report from victims or reporters.
 ## Description
 Building API using Node.js to get report data from Cloud Firestore and display it to the administrator website and get an API key from the News API Website and put it into REST API running in Google Compute Engine to get the news data.
 
-## REST API
+## How to Replicate Our REST API
 Local environment:
-1. Install dependencies.
+1. Clone this project
+   ```
+   git clone git@github.com:Novia-No-Violence-App-Report/novia-web-api.git
+   ```
+   or
+   ```
+   git clone https://github.com/Novia-No-Violence-App-Report/novia-web-api.git
+   ```
+2. Install dependencies.
    ```
    npm install
    ```
