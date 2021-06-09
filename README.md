@@ -14,3 +14,11 @@ It uses chatbot system to collect report from victims or reporters.
 ## Description
 Building API using Node.js to get report data from Cloud Firestore and display it to the administrator website and get an API key from the News API Website and put it into REST API running in Google Compute Engine to get the news data.
 
+## REST API
+1. npm install (node module)
+2. Get News API Key https://newsapi.org/
+3. vocabulary.json from machine learning model
+   ```python
+   import json
+   json.dumps(tokenizer.word_index)
+   ```
