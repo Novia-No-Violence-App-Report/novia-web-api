@@ -8,7 +8,7 @@ Novia is a friendly reporting app for any inappropriate acts to woman and child.
 It uses chatbot system to collect report from victims or reporters.
 
 ## Screenshots
-<img src="https://storage.googleapis.com/novia-files/screenshots/novia-admin.jpeg" align="left" width="500">
+<img src="https://storage.googleapis.com/novia-files/screenshots/novia-admin.jpeg" align="center" width="500">
 <br/>
 
 ## Description
