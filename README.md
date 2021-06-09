@@ -16,30 +16,31 @@ Building API using Node.js to get report data from Cloud Firestore and display i
 
 ## REST API
 Local environment:
-1. Install dependencies
+1. Install dependencies.
    ```
    npm install
    ```
-2. Get News API Key https://newsapi.org/
-3. vocabulary.json from machine learning model
+2. Get News API Key from https://newsapi.org/.
+3. vocabulary.json from machine learning model.
    ```python
    import json
    json.dumps(yourtokenizervariable.word_index)
    ```
-4. Download service-account.json from Google Cloud Platform
-   - In the Cloud Console, go to the Service Accounts page. https://console.cloud.google.com/iam-admin/serviceaccounts
+4. Download service-account.json from Google Cloud Platform.
+   - In the Cloud Console, go to the Service Accounts page. https://console.cloud.google.com/iam-admin/serviceaccounts.
    - Select a project.
-   - If you don't have any service accounts, click "Create Service Account"
+   - If you don't have any service accounts, click "Create Service Account".
    - Click the email address of the service account that you want to create a key for. 
    - Click the Keys tab.
    - Click the Add key drop-down menu, then select Create new key.
    - Select JSON as the Key type and click Create.
-   - Rename file to "service-account.json"
-   - Put "service-account.json" into your novia-web-api folder
-5. Run Node.js 
+   - Rename file to "service-account.json".
+   - Put "service-account.json" into your novia-web-api folder.
+5. Run Node.js.
    ```
    node index.js
    ```
+6. Go to your browser and type http://localhost:8080/admin to see the result.
 
 
 
