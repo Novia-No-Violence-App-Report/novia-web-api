@@ -18,6 +18,7 @@ async function addReport(report, userId, importance) {
     const res = await db.collection('reports').add({
         importance: importance,
         report: report,
+        location: location,
         timestamp: timeStamp(),
         user_id: userId
     });
