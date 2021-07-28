@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,300;1,400&display=swap');
 
-
 :root{
     --main-color: #4D2F5F;
     --color-dark: #1D2231;
@@ -12,7 +11,7 @@
     margin: 0;
     box-sizing: border-box;
     list-style-type: none;
-    text-decoration: none;
+    /* text-decoration: none; */
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -20,7 +19,7 @@
 /* SIDEBAR MENU */
 .sidebar{
     position: fixed;
-    width: 345px;
+    width: 285px;
     left: 0;
     right: 0;
     top: 0;
@@ -41,7 +40,7 @@
 }
 
 .sidebar-logo img{
-    margin-left: 33%;
+    margin-left: 30%;
     margin-top: 25px;
 }
 
@@ -85,7 +84,7 @@
 }
 
 .content{
-    margin-left: 345px;
+    margin-left: 285px;
     transition: margin-left 300ms;
 }
 
@@ -98,8 +97,8 @@ header{
     padding: 1rem;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
     position: fixed;
-    left: 345px;
-    width: calc(100% - 345px);
+    left: 285px;
+    width: calc(100% - 285px);
     top: 0;
     z-index: 100;
     transition: left 300ms;
@@ -205,25 +204,42 @@ main{
 }
 
 .reports-grid{
+    /* margin-top: 1rem; */
+    display: grid;
+    grid-template-row: 50% auto;
+    /* margin-left: 2rem; */
+    /* margin-right: 2rem; */
+}
+
+.all-grid{
     margin-top: 1rem;
     display: grid;
-    /* grid-template-columns: 60% auto; */
+    grid-template-columns: 70% auto;
     margin-left: 2rem;
     margin-right: 2rem;
 }
 
+tr.hover {
+    cursor: pointer;
+    /* whatever other hover styles you want */
+ }
+
 .card{
     background: #fff;
-    padding: 1rem 1rem 1rem;
+    padding:1rem .5rem .5rem 1rem;
     box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
-    margin-bottom: 78px;
+    margin-bottom: 1rem;
 }
 
 .reports{
     margin-right: 1rem;
 }
 
-.card-header, .card-body{
+.locations{
+    margin-right: 1rem;
+}
+
+.card-header{
     padding: 1rem;
 }
 
@@ -257,6 +273,7 @@ main{
 
 .card-body{
     font-size: 13.5px;
+    left: 0;
 }
 
 .card-head button{
@@ -275,9 +292,8 @@ main{
     border: 1px solid #46b0e6;
 }
 
-.txt{
-    margin-top: 20px;
-    margin-left: 10px;
+table{
+    border-collapse: collapse;
 }
 
 .table>thead{
@@ -306,3 +322,157 @@ td{
     overflow-x: auto;
 }
 
+
+td{
+    color: #222;
+}
+
+.table-responsive{
+    width: 100%;
+    overflow-x: auto;
+}
+
+.user{
+    /* display: flex;
+    justify-content: space-between;
+    align-items: center; */
+}
+
+.container{
+    /* padding: 20px; */
+    background: white;
+}
+
+.container ul{
+    position: relative;
+    padding-left: 0rem;
+}
+
+.container ul li{
+    position: relative;
+    list-style: none;
+    display: table;
+    margin: 2px 0;
+    padding-left: 35px;
+    padding-right: 5px;
+}
+
+.container ul li::before{
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 34px;
+    height: 34px;
+    background: white;
+    border-radius: 35px;
+    transition: background 0.5s, width 0.5s;
+    border: 2px solid #4D2F5F;
+    box-sizing: border-box;
+    transition-delay: 0.5s, 0s;
+}
+
+.container ul li p:hover{
+    color: white;
+    transition-delay: 0.5s;
+}
+
+.container ul li:hover::before{
+    width: 100%;
+    background: #4D2F5F;
+    color: white;
+    transition-delay: 0s, 0.5s;
+}
+
+.container ul li::after{
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 13px;
+    width: 6px;
+    height: 6px;
+    border-top: 2px solid #4D2F5F;
+    border-right: 2px solid #4D2F5F;
+    transform: rotate(45deg);
+    transition: 0.5s;
+    transition-delay: 0s;
+}
+
+.container ul li:hover::after{
+    transition-delay: 0.5s;
+    transform: rotate(45deg) scale(1.5);
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+    color: white;
+}
+
+
+.container ul li p{
+    position: relative;
+    z-index: 10;
+    padding: 2px 6px;
+    color: black;
+}
+
+.userTxt{
+    font-weight: bolder;
+    font-size: 13px;
+}
+
+#totalTxt{
+    font-size: 13px;
+}
+
+
+
+/* USER DATA POP UP */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1; 
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 365px; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+  }
+
+  
+  .close {
+    color: #aaaaaa;
+    float: right;
+    margin-left: 1265px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+
+/* SCROLLBAR */
+  .my-custom-scrollbar {
+    position: relative;
+    height: 350px;
+    overflow: auto;
+    }
+
+.table-wrapper-scroll-y {
+    display: block;
+    }
