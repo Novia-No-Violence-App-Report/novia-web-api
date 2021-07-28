@@ -17,9 +17,29 @@ async function getReports() {
     return data
 }
 
+async function getUser(){
+    const snapshot = await db.collection('users').get();
+    var data = []
+    snapshot.forEach((doc) => {
+      data.push(doc.data())
+    });
+    return data
+}
+
+async function getLocation(){
+    const snapshot = await db.collection('location').get();
+    var data = []
+    snapshot.forEach((doc) => {
+      data.push(doc.data())
+    });
+    return data
+}
+
 router.get('/', async function (req, res, next) {
     res.render('../views/admin.ejs', {
-        reports: await getReports()
+        reports: await getReports(),
+        users: await getUser(),
+        location: await getLocation()
     })
 })
 
