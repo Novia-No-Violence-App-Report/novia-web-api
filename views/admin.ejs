@@ -299,11 +299,11 @@
         cell = rows[i].cells[3];
         if (cell.innerHTML === 'low') {
             count = lowCount++;
-            document.getElementById('totalLow').innerHTML = (count+1)
+            document.getElementById('totalHigh').innerHTML = (count+1)
         } 
         else if (cell.innerHTML === 'high') {
             count = highCount++;
-            document.getElementById('totalHigh').innerHTML = (count+1)
+            document.getElementById('totalLow').innerHTML = (count+1)
         } 
     }
 
