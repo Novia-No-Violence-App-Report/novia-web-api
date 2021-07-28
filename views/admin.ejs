@@ -86,7 +86,6 @@
             </div>
         </header>
 
-
         <!-- TOTAL REPORTS -->
         <main>
             <div class="cards">
@@ -125,57 +124,158 @@
                 </div>
             </div>
 
+            <div class="all-grid">
+                <div class="reports-grid">
 
-            <div class="reports-grid">
+                    <!-- REPORTS TABLE -->
 
-                <!-- REPORTS TABLE -->
-                <div class="reports" id="reports">
-                    <div class="card">
-                        <p class="txt">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 18 18">
-                                <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
-                            </svg>
-                            &nbsp&nbsp Admin &nbsp&nbsp > &nbsp&nbsp User Report
-                        </p>
-                        <div class="card-head">
-                            <h4>View User Reports</h4>
-                            <button>See All</button>
+                    <div class="reports" id="reports">
+                        <div class="card">
+                            <p class="txt">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 18 18">
+                                    <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+                                </svg>
+                                &nbsp&nbsp Admin &nbsp&nbsp > &nbsp&nbsp User Report
+                            </p>
+                            <div class="card-head">
+                                <h4>View User Reports</h4>
+                                <!-- <button>See All</button> -->
+                            </div>
+                            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="adminTable" class="table table-hover table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">No</th>
+                                                    <th scope="col">Timestamp</th>
+                                                    <th scope="col">User ID</th>
+                                                    <th scope="col">Importance</th>
+                                                    <th scope="col">Report</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% reports.forEach(function(data, i){ %>
+                                                <tr>
+                                                    <th><%- i+1 %></th>
+                                                    <td><%- data.timestamp %></td>
+                                                    <td><%- data.user_id %></td>
+                                                    <td><%- data.importance %></td>
+                                                    <td><%- data.report %></td>
+                                                </tr>
+                                                <% }); %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                </div>
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="adminTable" class="table table-hover table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">Timestamp</th>
-                                            <th scope="col">User Id</th>
-                                            <th scope="col">Importance</th>
-                                            <th scope="col">Report</th>
-                                            <th scope="col">Location</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% reports.forEach(function(data, i){ %>
-                                        <tr>
-                                            <th><%- i+1 %></th>
-                                            <td><%- data.timestamp %></td>
-                                            <td><%- data.user_id %></td>
-                                            <td><%- data.importance %></td>
-                                            <td><%- data.report %></td>
-                                            <td><%- data.location %></td>
-                                        </tr>
-                                        <% }); %>
-                                    </tbody>
-                                </table>
+                    </div>
+
+                    <div class="locations" id="reports">
+                        <div class="card">
+                            <p class="txt">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 18 18">
+                                    <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+                                </svg>
+                                &nbsp&nbsp Admin &nbsp&nbsp > &nbsp&nbsp User Location
+                            </p>
+                            <div class="card-head">
+                                <h4>View User Location</h4>
+
+                            </div>
+                            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="adminLoc" class="table table-hover table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">No</th>
+                                                    <th scope="col">Timestamp</th>
+                                                    <th scope="col">User ID</th>
+                                                    <th scope="col">Last Location</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% location.forEach(function(data, i){ %>
+                                                <tr id="locs">
+                                                    <th><%- i+1 %></th>
+                                                    <td><%- data.timestamp %></td>
+                                                    <td><%- data.user_id %></td>
+                                                    <td><a href=<%- data.last_location %>><%- data.last_location %></a></td>
+                                                </tr>
+                                                <% }); %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                
-               
-            </div>
-
+                    <!-- USERS TABLE -->
+                    <div class="users">
+                        <div class="card">
+                            <div class="card-head">
+                                <h5>Users Data</h5>
+                                <button id="myBtn" type="button">See All</button>
+                            </div>
+                            <div class="card-body">
+                                <div class="user">
+                                      <p id="totalTxt">Total: <span id="userTotal">10</span> users</p>
+                                      <div class="container">
+                                          <ul id="userList">
+                                            <% users.forEach(function(data, i){ %>
+                                              <li id="cntNum"><p><span class="userTxt"><%- data.name %></span><br><%- data.email %></p></li>
+                                            <% }); %>
+                                          </ul>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>           
+                </div>
+            
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                            
+                                <div class="card-head">
+                                    <h4>User Data</h4>
+                                </div>
+                                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="adminLoc" class="table table-hover table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">No</th>
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Phone</th>
+                                                    <th scope="col">Address</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% users.forEach(function(data, i){ %>
+                                                <tr id="locs">
+                                                    <th><%- i+1 %></th>
+                                                    <td><%- data.user_id %></td>
+                                                    <td><%- data.name %></td>
+                                                    <td><%- data.email %></td>
+                                                    <td><%- data.phone %></td>
+                                                    <td><%- data.address %></td>
+                                                </tr>
+                                                <% }); %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </main>
     </div>
     <script src="js/bootstrap.js"></script>
@@ -183,19 +283,18 @@
 </body>
 
 <script>
+
+    // COUNT LOW AND HIGH REPORTS 
     var table = document.getElementById('adminTable'),
         totalReport = (table.rows.length - 1),
         rows = table.getElementsByTagName("tr");
-    
     var count = 0,
         cellNum = 0,
         cell,
         len = rows.length,
         lowCount = 0,
         highCount = 0
-    
     document.getElementById('count').innerHTML = totalReport
-    
     for (var i = 0; i < len; i++) {
         cell = rows[i].cells[3];
         if (cell.innerHTML === 'low') {
@@ -207,6 +306,33 @@
             document.getElementById('totalHigh').innerHTML = (count+1)
         } 
     }
+
+
+    // COUNT USER TOTAL 
+    var ul = document.getElementById('userList')
+    var lists = ul.getElementsByTagName('li')
+    var userCnt = lists.length
+    document.getElementById('userTotal').innerHTML = userCnt
+
+    
+    // USER DATA POPUP
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("myBtn");
+    var span = document.getElementsByClassName("close")[0];
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    
 </script>
+
+
 
 </html>
