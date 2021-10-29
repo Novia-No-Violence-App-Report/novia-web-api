@@ -4,7 +4,7 @@ const Firestore = require('@google-cloud/firestore');
 
 // Initialize Firestore
 const db = new Firestore({
-    projectId: 'research-station',
+    projectId: 'belajar-cloud-326815',
     keyFilename: 'service-account.json',
 });
 

@@ -9,7 +9,7 @@ const Firestore = require('@google-cloud/firestore');
 
 // Initialize Firestore
 const db = new Firestore({
-    projectId: 'research-station',
+    projectId: 'belajar-cloud-326815',
     keyFilename: 'service-account.json',
 });
 
@@ -18,7 +18,6 @@ async function addReport(report, userId, importance) {
     const res = await db.collection('reports').add({
         importance: importance,
         report: report,
-        location: location,
         timestamp: timeStamp(),
         user_id: userId
     });
@@ -51,7 +50,7 @@ function texts_to_sequences(rawInput) {
 
 router.post('/', async function (req, res, next) {
     try {
-        const modelUrl = "https://storage.googleapis.com/novia_model/models/model.json"
+        const modelUrl = "https://storage.googleapis.com/novia_model_ml/models/model.json"
 
         let report = req.body.report
         let userId = req.body.user_id
